@@ -23,8 +23,7 @@ namespace Connect4
 
         
 
-        //boolean used in win condition
-        bool hasWon = false;
+        
 
         public Form1()
         {
@@ -59,10 +58,20 @@ namespace Connect4
             {
                 
                 ((Button)sender).BackColor = Color.Green;
+
+                //check for win
+                winCheckerP1();
+                
+                    
+                
             }
             else if(turn == true)
             {
                 ((Button)sender).BackColor = Color.Red;
+
+                //check for win
+                winCheckerP2();
+                
             }
 
             //update turn boolean
@@ -82,6 +91,60 @@ namespace Connect4
             }
             
 
+        }
+
+        public void winCheckerP1()
+        {
+            //Horizontal Check 
+            for (int x = 0; x < btn.GetLength(0) - 3; x++)//-3 because you cant have 4 in a row on the last 3 positions so no need to check them 
+            {
+                for (int y = 0; y < btn.GetLength(1); y++)
+                {
+                    if(btn[x,y].BackColor == Color.Green && btn[x + 1, y].BackColor == Color.Green && btn[x + 2, y].BackColor == Color.Green && btn[x + 3, y].BackColor == Color.Green)
+                    {
+                        MessageBox.Show("Player 1 Wins!", "Congratulations", MessageBoxButtons.OK);
+                    }
+                }
+            }
+
+            //Vertical Check
+            for (int y = 0; y < btn.GetLength(1) - 3; y++)//-3 because you cant have 4 in a row on the last 3 positions so no need to check them 
+            {
+                for (int x = 0; x < btn.GetLength(0); x++)
+                {
+                    if (btn[x, y].BackColor == Color.Green && btn[x, y+1].BackColor == Color.Green && btn[x, y + 2].BackColor == Color.Green && btn[x, y + 3].BackColor == Color.Green)
+                    {
+                        MessageBox.Show("Player 1 Wins!", "Congratulations", MessageBoxButtons.OK);
+                    }
+                }
+            }
+        }
+
+        public void winCheckerP2()
+        {
+            //Horizontal Check 
+            for (int x = 0; x < btn.GetLength(0) - 3; x++)//-3 because you cant have 4 in a row on the last 3 positions so no need to check them 
+            {
+                for (int y = 0; y < btn.GetLength(1); y++)
+                {
+                    if (btn[x, y].BackColor == Color.Red && btn[x + 1, y].BackColor == Color.Red && btn[x + 2, y].BackColor == Color.Red && btn[x + 3, y].BackColor == Color.Red)
+                    {
+                        MessageBox.Show("Player 2 Wins!", "Congratulations", MessageBoxButtons.OK);
+                    }
+                }
+            }
+
+            //Vertical Check
+            for (int y = 0; y < btn.GetLength(1) - 3; y++)//-3 because you cant have 4 in a row on the last 3 positions so no need to check them 
+            {
+                for (int x = 0; x < btn.GetLength(0); x++)
+                {
+                    if (btn[x, y].BackColor == Color.Red && btn[x, y + 1].BackColor == Color.Red && btn[x, y + 2].BackColor == Color.Red && btn[x, y + 3].BackColor == Color.Red)
+                    {
+                        MessageBox.Show("Player 2 Wins!", "Congratulations", MessageBoxButtons.OK);
+                    }
+                }
+            }
         }
 
         
