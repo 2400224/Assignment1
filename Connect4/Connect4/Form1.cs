@@ -118,6 +118,9 @@ namespace Connect4
                     }
                 }
             }
+
+            //Top to bottom diagonal check
+
         }
 
         public void winCheckerP2()
