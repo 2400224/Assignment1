@@ -12,12 +12,16 @@ namespace Connect4
 {
     public partial class Form1 : Form
     {
+        //random object
+        Random rnd = new Random();
+
         //create the 2D array of buttons
         Button[,] btn = new Button[6,7];
 
-        //create int that keeps track of whose turn it is
-        // false = Players turn, true = AI's Turn
+        //Keep track of turns (false = Player 1, True = Player 2
         bool turn = false;
+
+        
 
         //boolean used in win condition
         bool hasWon = false;
@@ -44,33 +48,49 @@ namespace Connect4
 
         void btnEvent_Click(object sender, EventArgs e)//Event handler for  the buttons
         {
-            if (turn == false)
+            //validate user entry
+           if  (!validateUserChoice(sender))
             {
-                if (((Button)sender).BackColor == Color.Red || ((Button)sender).BackColor == Color.Blue)
-                {
-                    MessageBox.Show("This sqaure has already been chosen", "Invalid Move", MessageBoxButtons.OK);
-
-                    //return so that it is still the player's turn
-                    return;
-                }
-                else
-                {
-                    ((Button)sender).BackColor = Color.Blue;
-                }
-
+                MessageBox.Show("Button has already been chosen", "Invalid Input", MessageBoxButtons.OK);
+                return;
             }
 
-             if (turn == true)
-             {
-               ((Button)sender).BackColor = Color.Red;
-             }
+            if(turn == false)
+            {
+                
+                ((Button)sender).BackColor = Color.Green;
+            }
+            else if(turn == true)
+            {
+                ((Button)sender).BackColor = Color.Red;
+            }
 
+            //update turn boolean
             turn = !turn;
+
         }
+
+        public bool validateUserChoice(object sender)
+        {
+            if (((Button)sender).BackColor == Color.White)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+
+        }
+
+        
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
+
+        
     }
 }
