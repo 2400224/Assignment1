@@ -56,7 +56,7 @@ namespace Connect4
 
             if(turn == false)
             {
-                
+                //set colour
                 ((Button)sender).BackColor = Color.Green;
 
                 //check for win
@@ -67,6 +67,7 @@ namespace Connect4
             }
             else if(turn == true)
             {
+                //set colour
                 ((Button)sender).BackColor = Color.Red;
 
                 //check for win
@@ -78,6 +79,8 @@ namespace Connect4
             turn = !turn;
 
         }
+
+        
 
         public bool validateUserChoice(object sender)
         {
@@ -107,7 +110,7 @@ namespace Connect4
                 }
             }
 
-            //Vertical Check
+            //Vertical Check 
             for (int y = 0; y < btn.GetLength(1) - 3; y++)//-3 because you cant have 4 in a row on the last 3 positions so no need to check them 
             {
                 for (int x = 0; x < btn.GetLength(0); x++)
@@ -119,7 +122,30 @@ namespace Connect4
                 }
             }
 
-            //Top to bottom diagonal check
+            // top left to bottom right diagonal check
+            for (int x= 0; x < btn.GetLength(0)-3; x++)
+            {
+                for (int y = 0; y < btn.GetLength(1)-3; y++)
+                {
+                    if (btn[x, y].BackColor == Color.Green && btn[x + 1, y + 1].BackColor == Color.Green && btn[x + 2, y + 2].BackColor == Color.Green && btn[x + 3, y + 3].BackColor == Color.Green)
+                    {
+                        MessageBox.Show("Player 1 Wins!", "Congratulations", MessageBoxButtons.OK);
+                    }
+                }
+            }
+
+            //bottom left to top right diagonal check
+            for (int x = 0; x < btn.GetLength(0) - 3; x++)
+            {
+                for (int y = 3; y < btn.GetLength(1); y++)
+                {
+                    if (btn[x, y].BackColor == Color.Green && btn[x + 1, y - 1].BackColor == Color.Green && btn[x + 2, y - 2].BackColor == Color.Green && btn[x + 3, y - 3].BackColor == Color.Green)
+                    {
+                        MessageBox.Show("Player 1 Wins!", "Congratulations", MessageBoxButtons.OK);
+                    }
+                }
+            }
+
 
         }
 
@@ -148,6 +174,32 @@ namespace Connect4
                     }
                 }
             }
+
+            // top left to bottom right diagonal check
+            for (int x = 0; x < btn.GetLength(0) - 3; x++)
+            {
+                for (int y = 0; y < btn.GetLength(1) - 3; y++)
+                {
+                    if (btn[x, y].BackColor == Color.Red && btn[x + 1, y + 1].BackColor == Color.Red && btn[x + 2, y + 2].BackColor == Color.Red && btn[x + 3, y + 3].BackColor == Color.Red)
+                    {
+                        MessageBox.Show("Player 2 Wins!", "Congratulations", MessageBoxButtons.OK);
+                    }
+                }
+            }
+
+            //bottom left to top right diagonal check
+            for (int x = 0; x < btn.GetLength(0) - 3; x++)
+            {
+                for (int y = 3; y < btn.GetLength(1); y++)
+                {
+                    if (btn[x, y].BackColor == Color.Red && btn[x + 1, y - 1].BackColor == Color.Red && btn[x + 2, y - 2].BackColor == Color.Red && btn[x + 3, y - 3].BackColor == Color.Red)
+                    {
+                        MessageBox.Show("Player 2 Wins!", "Congratulations", MessageBoxButtons.OK);
+                    }
+                }
+            }
+
+
         }
 
         
