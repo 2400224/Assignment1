@@ -12,6 +12,8 @@ namespace Connect4
 {
     public partial class Form1 : Form
     {
+        //create menu object
+        MenuStrip menu = new MenuStrip();
 
         //create a 2D array that contains Button objects
         Button[,] btn = new Button[10,10];
@@ -36,6 +38,44 @@ namespace Connect4
         {
             InitializeComponent();
 
+            //configure menu options
+            menu.BackColor = Color.LightGray;//color 
+            menu.ForeColor = Color.White;//text color
+            menu.Font = Font;//font used in menu
+            MainMenuStrip = menu;
+            Controls.Add(menu);//add to form
+            menu.Name = "Menu";//set name
+            menu.Dock = DockStyle.Bottom;//set menu to be at bottom
+
+            //add about item to menu
+            ToolStripMenuItem about = new ToolStripMenuItem("About");//create new item
+            about.BackColor = Color.Gray;//colour
+            about.Font = Font;//font
+            menu.Items.Add(about);//add to form
+            about.Click += new System.EventHandler(this.about_Click);//link to event handler
+
+            //add how to play item to menu
+            ToolStripMenuItem htp = new ToolStripMenuItem("How to Play");//create new item
+            htp.BackColor = Color.Gray;//colour
+            htp.Font = Font;//font
+            menu.Items.Add(htp);//add to form
+            htp.Click += new System.EventHandler(this.htp_Click);//link to event handler
+
+            //add reset game item to menu
+            ToolStripMenuItem reset = new ToolStripMenuItem("Restart Game");//create new item
+            reset.BackColor = Color.Gray;//colour
+            reset.Font = Font;//font
+            menu.Items.Add(reset);//add to form
+            reset.Click += new System.EventHandler(this.reset_Click);//link to event handler
+
+            //add quit item to menu
+            ToolStripMenuItem quit = new ToolStripMenuItem("Quit");//create new item
+            quit.BackColor = Color.Gray;//colour
+            quit.Font = Font;//font
+            menu.Items.Add(quit);//add to form
+            quit.Click += new System.EventHandler(this.quit_Click);//link to event handler
+
+            
             //add p1Moves to form
             p1Moves = labelDesign(p1Moves);//call function that changes design settings 
             p1Moves.Location = new Point(56, 5);//location
@@ -76,6 +116,7 @@ namespace Connect4
 
            
         }
+        
 
         void btnEvent_Click(object sender, EventArgs e)//Event handler for  the buttons
         {
@@ -92,18 +133,18 @@ namespace Connect4
             }
 
 
-            if(turn == false)
+            if(turn == false)//if Player 1's turn
             {
                 //update the moves counter 
                 p1MoveCounter = p1MoveCounter + 1;
                 p1Moves.Text = "P1 Moves: " + p1MoveCounter;
 
 
-                //call function to place colour
+                //covert index to int
                 int i = Int32.Parse(index[0]);
                 int j = Int32.Parse(index[1]);
 
-                
+                //call funtion to place colours
                 placeColour(i,j);
 
                 //check for win
@@ -112,16 +153,17 @@ namespace Connect4
                     
                 
             }
-            else if(turn == true)
+            else if(turn == true)//if Player 2's turn
             {
                 //update the moves counter 
                 p2MoveCounter = p2MoveCounter + 1;
                 p2Moves.Text = "P2 Moves: " + p2MoveCounter;
 
-                //call function to place colour
+                //covert index to int
                 int i = Int32.Parse(index[0]);
                 int j = Int32.Parse(index[1]);
                 
+                //call function to place colour
                  placeColour(i, j);
 
                 //check for win
@@ -132,15 +174,54 @@ namespace Connect4
             //update turn boolean
             turn = !turn;
 
-            if (turn == false)
+            
+            if (turn == false)//if Player 1's turn
             {
                 //update turn indiator
                 lbl.Text = "Player 1's Turn";
             }
-            else if (turn == true)
+            else if (turn == true)//if Player 2's turn
             {
                 //update turn indicator
                 lbl.Text = "Player 2's Turn";
+            }
+
+        }
+
+        public void about_Click(object sender, System.EventArgs e)//event hander for 'about' item in the menu
+        {
+            MessageBox.Show("A simple connect 4 game made in C# for the first AC22005 Assignment © 2022 - Team 12", "About", MessageBoxButtons.OK);
+        }
+
+        public void htp_Click(object sender, System.EventArgs e)//event hander for 'How to Play' item in the menu
+        {
+            MessageBox.Show("This is a 2 Player Game where each player takes turns placing their colour on the board. The first player to get four of their colours in a row diagonally, horizontally, or vertically will win. The less moves it takes, the better!", "How to Play", MessageBoxButtons.OK);
+        }
+
+        public void quit_Click(object sender, System.EventArgs e)//event hander for 'quit' item in the menu
+        {
+            Close();
+        }
+
+        public void reset_Click(object sender, System.EventArgs e)//event handler for 'reset' item in the menu
+        {
+            //reset variables and lables
+            turn = false;
+            p1MoveCounter = 0;
+            p2MoveCounter = 0;
+            lbl.Text = "Player 1's Turn";
+            p1Moves.Text = "P1 Moves: 0";
+            p2Moves.Text = "P2 Moves: 0";
+            
+
+            //change all buttons back to white
+            for (int x = 0; x < btn.GetLength(0); x++)//x loop
+            {
+                
+                for (int y = 0; y < btn.GetLength(1); y++)//y loop
+                {
+                    btn[x, y].BackColor = Color.White; //set colour of buttons to white 
+                }
             }
 
         }
@@ -164,10 +245,10 @@ namespace Connect4
             else//if there is a blank space below where the player currently wants to place theirs
             {
                 
-                 while(btn[i,j].BackColor == Color.White)
+                 while(btn[i,j].BackColor == Color.White)//keep incrementing j unil a square that isn't white is reached
                  {
                     j++;
-                    if(j == btn.GetLength(1))//if bottom is reached
+                    if(j == btn.GetLength(1))//if bottom is reached while incrementing j
                     {
                         if (!turn)//set to either yellow or red depending on turn boolean
                         {
