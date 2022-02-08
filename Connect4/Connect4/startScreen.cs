@@ -21,6 +21,8 @@ namespace Connect4
         //create a label for the title
         Label title = new Label();
 
+        
+
         public startScreen()
         {
             InitializeComponent();
