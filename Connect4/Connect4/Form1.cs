@@ -15,6 +15,9 @@ namespace Connect4
         //create menu object
         MenuStrip menu = new MenuStrip();
 
+        //create instance of start screen
+        startScreen start = new startScreen();
+
         //create a 2D array that contains Button objects
         Button[,] btn = new Button[10,10];
 
@@ -41,7 +44,7 @@ namespace Connect4
             //configure menu options
             menu.BackColor = Color.LightGray;//color 
             menu.ForeColor = Color.White;//text color
-            menu.Font = Font;//font used in menu
+            menu.Font = textFont;//font used in menu
             MainMenuStrip = menu;
             Controls.Add(menu);//add to form
             menu.Name = "Menu";//set name
@@ -50,28 +53,28 @@ namespace Connect4
             //add about item to menu
             ToolStripMenuItem about = new ToolStripMenuItem("About");//create new item
             about.BackColor = Color.Gray;//colour
-            about.Font = Font;//font
+            about.Font = textFont;//font
             menu.Items.Add(about);//add to form
             about.Click += new System.EventHandler(this.about_Click);//link to event handler
 
             //add how to play item to menu
             ToolStripMenuItem htp = new ToolStripMenuItem("How to Play");//create new item
             htp.BackColor = Color.Gray;//colour
-            htp.Font = Font;//font
+            htp.Font = textFont;//font
             menu.Items.Add(htp);//add to form
             htp.Click += new System.EventHandler(this.htp_Click);//link to event handler
 
             //add reset game item to menu
             ToolStripMenuItem reset = new ToolStripMenuItem("Restart Game");//create new item
             reset.BackColor = Color.Gray;//colour
-            reset.Font = Font;//font
+            reset.Font = textFont;//font
             menu.Items.Add(reset);//add to form
             reset.Click += new System.EventHandler(this.reset_Click);//link to event handler
 
             //add quit item to menu
-            ToolStripMenuItem quit = new ToolStripMenuItem("Quit");//create new item
+            ToolStripMenuItem quit = new ToolStripMenuItem("Quit to Menu");//create new item
             quit.BackColor = Color.Gray;//colour
-            quit.Font = Font;//font
+            quit.Font = textFont;//font
             menu.Items.Add(quit);//add to form
             quit.Click += new System.EventHandler(this.quit_Click);//link to event handler
 
@@ -200,6 +203,10 @@ namespace Connect4
 
         public void quit_Click(object sender, System.EventArgs e)//event hander for 'quit' item in the menu
         {
+
+
+            //show start screen
+            start.Show();
             Close();
         }
 
@@ -308,6 +315,10 @@ namespace Connect4
                     if(btn[x,y].BackColor == Color.Yellow && btn[x + 1, y].BackColor == Color.Yellow && btn[x + 2, y].BackColor == Color.Yellow && btn[x + 3, y].BackColor == Color.Yellow)
                     {
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
+
+                        //show start screen
+                        start.Show();
+                        Close();
                     }
                 }
             }
@@ -320,6 +331,10 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Yellow && btn[x, y+1].BackColor == Color.Yellow && btn[x, y + 2].BackColor == Color.Yellow && btn[x, y + 3].BackColor == Color.Yellow)
                     {
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
+
+                        //show start screen
+                        start.Show();
+                        Close();
                     }
                 }
             }
@@ -332,6 +347,10 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Yellow && btn[x + 1, y + 1].BackColor == Color.Yellow && btn[x + 2, y + 2].BackColor == Color.Yellow && btn[x + 3, y + 3].BackColor == Color.Yellow)
                     {
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves! ", "Congratulations", MessageBoxButtons.OK);
+
+                        //show start screen
+                        start.Show();
+                        Close();
                     }
                 }
             }
@@ -344,6 +363,10 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Yellow && btn[x + 1, y - 1].BackColor == Color.Yellow && btn[x + 2, y - 2].BackColor == Color.Yellow && btn[x + 3, y - 3].BackColor == Color.Yellow)
                     {
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves! ", "Congratulations", MessageBoxButtons.OK);
+
+                        //show start screen
+                        start.Show();
+                        Close();
                     }
                 }
             }
@@ -361,6 +384,10 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y].BackColor == Color.Red && btn[x + 2, y].BackColor == Color.Red && btn[x + 3, y].BackColor == Color.Red)
                     {
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
+
+                        //show start screen
+                        start.Show();
+                        Close();
                     }
                 }
             }
@@ -373,6 +400,10 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Red && btn[x, y + 1].BackColor == Color.Red && btn[x, y + 2].BackColor == Color.Red && btn[x, y + 3].BackColor == Color.Red)
                     {
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
+
+                        //show start screen
+                        start.Show();
+                        Close();
                     }
                 }
             }
@@ -385,6 +416,10 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y + 1].BackColor == Color.Red && btn[x + 2, y + 2].BackColor == Color.Red && btn[x + 3, y + 3].BackColor == Color.Red)
                     {
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
+
+                        //show start screen
+                        start.Show();
+                        Close();
                     }
                 }
             }
@@ -397,6 +432,10 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y - 1].BackColor == Color.Red && btn[x + 2, y - 2].BackColor == Color.Red && btn[x + 3, y - 3].BackColor == Color.Red)
                     {
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
+
+                        //show start screen
+                        start.Show();
+                        Close();
                     }
                 }
             }
