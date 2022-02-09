@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -36,6 +37,9 @@ namespace Connect4
 
         //create an new Font object
         Font textFont = new Font("Berlin Sans FB", 14);
+
+        //create filepath for high score table
+        string path = @"score.txt";
 
         public Form1()
         {
@@ -315,7 +319,7 @@ namespace Connect4
                     if(btn[x,y].BackColor == Color.Yellow && btn[x + 1, y].BackColor == Color.Yellow && btn[x + 2, y].BackColor == Color.Yellow && btn[x + 3, y].BackColor == Color.Yellow)
                     {
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
-
+                        saveScore(p1MoveCounter);
                         //show start screen
                         start.Show();
                         Close();
@@ -331,7 +335,7 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Yellow && btn[x, y+1].BackColor == Color.Yellow && btn[x, y + 2].BackColor == Color.Yellow && btn[x, y + 3].BackColor == Color.Yellow)
                     {
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
-
+                        saveScore(p1MoveCounter);
                         //show start screen
                         start.Show();
                         Close();
@@ -347,7 +351,7 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Yellow && btn[x + 1, y + 1].BackColor == Color.Yellow && btn[x + 2, y + 2].BackColor == Color.Yellow && btn[x + 3, y + 3].BackColor == Color.Yellow)
                     {
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves! ", "Congratulations", MessageBoxButtons.OK);
-
+                        saveScore(p1MoveCounter);
                         //show start screen
                         start.Show();
                         Close();
@@ -363,7 +367,7 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Yellow && btn[x + 1, y - 1].BackColor == Color.Yellow && btn[x + 2, y - 2].BackColor == Color.Yellow && btn[x + 3, y - 3].BackColor == Color.Yellow)
                     {
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves! ", "Congratulations", MessageBoxButtons.OK);
-
+                        saveScore(p1MoveCounter);
                         //show start screen
                         start.Show();
                         Close();
@@ -384,7 +388,7 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y].BackColor == Color.Red && btn[x + 2, y].BackColor == Color.Red && btn[x + 3, y].BackColor == Color.Red)
                     {
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
-
+                        saveScore(p2MoveCounter);
                         //show start screen
                         start.Show();
                         Close();
@@ -400,7 +404,7 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Red && btn[x, y + 1].BackColor == Color.Red && btn[x, y + 2].BackColor == Color.Red && btn[x, y + 3].BackColor == Color.Red)
                     {
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
-
+                        saveScore(p2MoveCounter);
                         //show start screen
                         start.Show();
                         Close();
@@ -416,7 +420,7 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y + 1].BackColor == Color.Red && btn[x + 2, y + 2].BackColor == Color.Red && btn[x + 3, y + 3].BackColor == Color.Red)
                     {
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
-
+                        saveScore(p2MoveCounter);
                         //show start screen
                         start.Show();
                         Close();
@@ -432,7 +436,7 @@ namespace Connect4
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y - 1].BackColor == Color.Red && btn[x + 2, y - 2].BackColor == Color.Red && btn[x + 3, y - 3].BackColor == Color.Red)
                     {
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
-
+                        saveScore(p2MoveCounter);
                         //show start screen
                         start.Show();
                         Close();
@@ -441,6 +445,39 @@ namespace Connect4
             }
 
 
+        }
+
+        public void saveScore(int moveCounter)
+        {
+            start.loadScore();
+            // Check the current turn
+            // Then check if the winning score is better than previous scores.
+            if (!turn)
+            {
+                if (moveCounter < start.p1BestScore || start.p1BestScore == 0)
+                {
+                    FileInfo f = new FileInfo(path);
+                    StreamWriter w = f.CreateText();
+
+                    start.p1BestScore = moveCounter;
+                    w.WriteLine("1 " + moveCounter);
+                    w.WriteLine("2 " + start.p2BestScore);
+                    w.Close();
+                }
+            }
+            else
+            {
+                if (moveCounter < start.p2BestScore || start.p2BestScore == 0)
+                {
+                    FileInfo f = new FileInfo(path);
+                    StreamWriter w = f.CreateText();
+
+                    start.p2BestScore = moveCounter;
+                    w.WriteLine("1 " + start.p1BestScore);
+                    w.WriteLine("2 " + moveCounter);
+                    w.Close();
+                }
+            }
         }
 
         

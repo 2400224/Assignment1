@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,7 +22,17 @@ namespace Connect4
         //create a label for the title
         Label title = new Label();
 
-        
+        //create filepath for high score table
+        string path = @"score.txt";
+
+        //create new label Objects
+        Label p1BestMoves = new Label();
+        Label pBest2Moves = new Label();
+        Label noMoves = new Label();
+
+        //create variables to store best scores
+        public int p1BestScore;
+        public int p2BestScore;
 
         public startScreen()
         {
@@ -54,9 +65,26 @@ namespace Connect4
             exit.Click += new EventHandler(this.exit_Click);//link to event handler
             Controls.Add(exit);//add to form
 
+            //add noMoves to form
+            noMoves = labelDesign(noMoves);//call function that changes design settings 
+            noMoves.Location = new Point(150, 130);//location
+            noMoves.Text = "Play some games to see your highscores!";//inital text
+            noMoves.AutoSize = true;
+            Controls.Add(noMoves);//add to form
 
+            //add p1Moves to form
+            p1BestMoves = labelDesign(p1BestMoves);//call function that changes design settings 
+            p1BestMoves.Location = new Point(190, 105);//location
+            p1BestMoves.Text = "P1 Best Moves: ";//inital text
+            Controls.Add(p1BestMoves);//add to form
 
+            //add p2Moves to form
+            pBest2Moves = labelDesign(pBest2Moves);//call function that changes design settings 
+            pBest2Moves.Location = new Point(300, 105);//location
+            pBest2Moves.Text = "P2 Best Moves: ";//inital text
+            Controls.Add(pBest2Moves);//add to form
 
+            loadScore();
         }
 
         public void title_Click(object sender, EventArgs e)
@@ -76,9 +104,84 @@ namespace Connect4
             Close();
         }
 
+        public void loadScore()
+        {
+            if (!File.Exists(path))
+            {
+                p1BestMoves.Hide();
+                pBest2Moves.Hide();
+                noMoves.Show();
+                return;
+            }
+
+            string[] readScores = new string[3];
+            StreamReader s = File.OpenText(path);
+            string read = null;
+
+            int i = 0;
+            while ((read = s.ReadLine()) != null)
+            {
+                readScores[i] = read;
+                i++;
+            }
+            s.Close();
+
+            string[] fileData = new string[i];
+            string[,] scores = new string[3, 2];
+            for (int j = 0; j < readScores.Length; j++)
+            {
+                if (readScores[j] != null)
+                {
+                    fileData = readScores[j].Split(' ');
+                    scores[j, 0] = fileData[0];
+                    scores[j, 1] = fileData[1];
+                }
+            }
+
+            for (int k = 0; k < scores.GetLength(0); k++)
+            {
+                if (scores[k,0] == "1")
+                {
+                    p1BestMoves.Text = "P1 Best Moves: " + scores[k,1];
+                    p1BestScore = Int32.Parse(scores[k, 1]);
+                }
+                else if (scores[k,0] == "2")
+                {
+                    pBest2Moves.Text = "P2 Best Moves: " + scores[k, 1];
+                    p2BestScore = Int32.Parse(scores[k, 1]);
+                }
+            }
+
+            if (p1BestScore == 0 && p2BestScore == 0)
+            {
+                p1BestMoves.Hide();
+                pBest2Moves.Hide();
+                noMoves.Show();
+            }
+            else
+            {
+                noMoves.Hide();
+                p1BestMoves.Show();
+                pBest2Moves.Show();
+            }
+
+        }
+
+        public Label labelDesign(Label l)//function used to modify design options for the label objects 
+        {
+            Font textFont = new Font("Berlin Sans FB", 14);
+
+            l.BackColor = Color.Blue;//label colour 
+            l.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;//set text alignment
+            l.Size = new Size(110, 50);//label size
+            l.Font = textFont;//set font of label
+            return l;
+        }
+
         private void startScreen_Load(object sender, EventArgs e)
         {
-
+            //loads in the highscore file before start screen is displayed
+            loadScore();
         }
     }
 }
