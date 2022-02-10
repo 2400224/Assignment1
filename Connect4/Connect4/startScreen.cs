@@ -34,6 +34,9 @@ namespace Connect4
         public int p1BestScore;
         public int p2BestScore;
 
+        //create variable to choose between playing against a player or the computer.
+        public bool vsPlayer = true;
+
         public startScreen()
         {
             InitializeComponent();
@@ -83,6 +86,8 @@ namespace Connect4
             pBest2Moves.Location = new Point(300, 105);//location
             pBest2Moves.Text = "P2 Best Moves: ";//inital text
             Controls.Add(pBest2Moves);//add to form
+
+            vsPlayer = false;
         }
 
         public void title_Click(object sender, EventArgs e)

@@ -41,6 +41,9 @@ namespace Connect4
         //create filepath for high score table
         string path = @"score.txt";
 
+        //variable for computer move
+        Random r = new Random();
+
         public Form1()
         {
             InitializeComponent();
@@ -139,8 +142,13 @@ namespace Connect4
                 return;
             }
 
+            DoTurns(index);
 
-            if(turn == false)//if Player 1's turn
+        }
+
+        private void DoTurns(string[] coords)
+        {
+            if (turn == false)//if Player 1's turn
             {
                 //update the moves counter 
                 p1MoveCounter = p1MoveCounter + 1;
@@ -148,40 +156,55 @@ namespace Connect4
 
 
                 //covert index to int
-                int i = Int32.Parse(index[0]);
-                int j = Int32.Parse(index[1]);
+                int i = Int32.Parse(coords[0]);
+                int j = Int32.Parse(coords[1]);
 
                 //call funtion to place colours
-                placeColour(i,j);
+                placeColour(i, j);
 
                 //check for win
                 winCheckerP1();
-                
-                    
-                
+
+
+
             }
-            else if(turn == true)//if Player 2's turn
+            else if (turn == true)//if Player 2's turn
             {
                 //update the moves counter 
                 p2MoveCounter = p2MoveCounter + 1;
                 p2Moves.Text = "P2 Moves: " + p2MoveCounter;
 
                 //covert index to int
-                int i = Int32.Parse(index[0]);
-                int j = Int32.Parse(index[1]);
-                
+                int i = Int32.Parse(coords[0]);
+                int j = Int32.Parse(coords[1]);
+
                 //call function to place colour
-                 placeColour(i, j);
+                placeColour(i, j);
 
                 //check for win
                 winCheckerP2();
-                
+
             }
 
             //update turn boolean
             turn = !turn;
 
-            
+            if (turn && !start.vsPlayer)
+            {
+                //update the moves counter 
+                p2MoveCounter = p2MoveCounter + 1;
+                p2Moves.Text = "Comp Moves: " + p2MoveCounter;
+
+                //computer does its move
+                CompMove();
+
+                //check for win
+                winCheckerP2();
+
+                //update turn boolean
+                turn = !turn;
+            }
+
             if (turn == false)//if Player 1's turn
             {
                 //update turn indiator
@@ -192,7 +215,6 @@ namespace Connect4
                 //update turn indicator
                 lbl.Text = "Player 2's Turn";
             }
-
         }
 
         public void about_Click(object sender, System.EventArgs e)//event hander for 'about' item in the menu
@@ -240,7 +262,6 @@ namespace Connect4
         public void placeColour(int i, int j)//function that ensures colours fall to the bottom when placed 
         {
 
-            
             if ( j == btn.GetLength(1))//if user is placing on the bottom row
             {
                 if (!turn)//set to either yellow or red depending on turn boolean
@@ -282,7 +303,6 @@ namespace Connect4
                 }
 
             }
-            
         }
 
         public Label labelDesign(Label l)//function used to modify design options for the label objects 
@@ -387,11 +407,21 @@ namespace Connect4
                 {
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y].BackColor == Color.Red && btn[x + 2, y].BackColor == Color.Red && btn[x + 3, y].BackColor == Color.Red)
                     {
-                        MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
-                        saveScore(p2MoveCounter);
-                        //show start screen
-                        start.Show();
-                        Close();
+                        if (start.vsPlayer)
+                        {
+                            MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
+                            saveScore(p2MoveCounter);
+                            //show start screen
+                            start.Show();
+                            Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Computer has won!", "LOST", MessageBoxButtons.OK);
+                            //show start screen
+                            start.Show();
+                            Close();
+                        }
                     }
                 }
             }
@@ -403,12 +433,23 @@ namespace Connect4
                 {
                     if (btn[x, y].BackColor == Color.Red && btn[x, y + 1].BackColor == Color.Red && btn[x, y + 2].BackColor == Color.Red && btn[x, y + 3].BackColor == Color.Red)
                     {
-                        MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
-                        saveScore(p2MoveCounter);
-                        //show start screen
-                        start.Show();
-                        Close();
+                        if (start.vsPlayer)
+                        {
+                            MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
+                            saveScore(p2MoveCounter);
+                            //show start screen
+                            start.Show();
+                            Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Computer has won!", "LOST", MessageBoxButtons.OK);
+                            //show start screen
+                            start.Show();
+                            Close();
+                        }
                     }
+
                 }
             }
 
@@ -417,13 +458,23 @@ namespace Connect4
             {
                 for (int y = 0; y < btn.GetLength(1) - 3; y++)
                 {
-                    if (btn[x, y].BackColor == Color.Red && btn[x + 1, y + 1].BackColor == Color.Red && btn[x + 2, y + 2].BackColor == Color.Red && btn[x + 3, y + 3].BackColor == Color.Red)
+                    if (btn[x, y].BackColor == Color.Yellow && btn[x + 1, y + 1].BackColor == Color.Yellow && btn[x + 2, y + 2].BackColor == Color.Yellow && btn[x + 3, y + 3].BackColor == Color.Yellow)
                     {
-                        MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
-                        saveScore(p2MoveCounter);
-                        //show start screen
-                        start.Show();
-                        Close();
+                        if (start.vsPlayer)
+                        {
+                            MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
+                            saveScore(p2MoveCounter);
+                            //show start screen
+                            start.Show();
+                            Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Computer has won!", "LOST", MessageBoxButtons.OK);
+                            //show start screen
+                            start.Show();
+                            Close();
+                        }
                     }
                 }
             }
@@ -435,11 +486,21 @@ namespace Connect4
                 {
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y - 1].BackColor == Color.Red && btn[x + 2, y - 2].BackColor == Color.Red && btn[x + 3, y - 3].BackColor == Color.Red)
                     {
-                        MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
-                        saveScore(p2MoveCounter);
-                        //show start screen
-                        start.Show();
-                        Close();
+                        if (start.vsPlayer)
+                        {
+                            MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
+                            saveScore(p2MoveCounter);
+                            //show start screen
+                            start.Show();
+                            Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Computer has won!", "LOST", MessageBoxButtons.OK);
+                            //show start screen
+                            start.Show();
+                            Close();
+                        }
                     }
                 }
             }
@@ -449,7 +510,14 @@ namespace Connect4
 
         public void saveScore(int moveCounter) // function to save highscore to file
         {
+            //no highscores against the computer
+            if (!start.vsPlayer)
+            {
+                return;
+            }
+
             start.loadScore();
+
             // Check the current turn
             // Then check if the winning score is better than previous scores.
             if (!turn)
@@ -480,7 +548,211 @@ namespace Connect4
             }
         }
 
-        
+        private void CompMove()
+        {
+            // Is valid when playing against the computer
+            // and its the computer's turn.
+            if (turn && !start.vsPlayer)
+            {
+                int winningMove = CompDetectMoves(Color.Orange);
+                int blockingMove = CompDetectMoves(Color.Blue);
+
+                if (winningMove != -1)
+                {
+                    placeColour(winningMove, 0);
+                }
+                else if (blockingMove != -1)
+                {
+                    placeColour(blockingMove, 0);
+                }
+                else
+                {
+                    int compMove = r.Next(btn.GetLength(0));
+
+                    while (btn[compMove, 0].BackColor != Color.White)
+                    {
+                        compMove = r.Next(btn.GetLength(0));
+                    }
+
+                    placeColour(compMove, 0);
+                }
+            }
+        }
+
+        private int CompDetectMoves(Color c)
+        {
+            int matching;
+            int empty;
+            int x = -1;
+            int y = 0;
+
+            //check horizontals to block/win
+            for (int i = 0; i < btn.GetLength(0) - 3; i++)
+            {
+                for (int j = 0; j < btn.GetLength(1); j++)
+                {
+                    matching = 0;
+                    empty = 0;
+                    for (int k = 0; k < 4; k++)
+                    {
+                        if (btn[i + k, j].BackColor == c)
+                        {
+                            matching++;
+                        }
+                        else if (btn[i + k, j].BackColor == Color.White)
+                        {
+                            empty++;
+                            x = i + k;
+                            y = j;
+                        }
+                    }
+
+                    if (matching == 3 && empty == 1)
+                    {
+                        //stop the computer from helping the player win
+                        //by only blocking when on the same row
+                        if ((y < 5 && btn[x, y + 1].BackColor != Color.White) || y == 5)
+                        {
+                            return x;
+                        }
+                        else
+                        {
+                            int move = r.Next(btn.GetLength(0));
+                            if (move == x)
+                            {
+                                if (x == 6)
+                                {
+                                    x = r.Next(x);
+                                }
+                                else
+                                {
+                                    x += 1;
+                                }
+                            }
+                            return x;
+                        }
+                    }
+                }
+            }
+
+
+            //check verticals to block/win
+            for (int i = 0; i < btn.GetLength(0); i++)
+            {
+                for (int j = 0; j < btn.GetLength(1) - 3; j++)
+                {
+                    if (btn[i, j].BackColor == Color.White &&
+                        btn[i, j + 1].BackColor == c &&
+                        btn[i, j + 2].BackColor == c &&
+                        btn[i, j + 3].BackColor == c)
+                    {
+                        x = i;
+                        return x;
+                    }
+                }
+            }
+
+            //check depressing diagonals to block/win
+            for (int i = 0; i < btn.GetLength(0) - 3; i++)
+            {
+                for (int j = 0; j < btn.GetLength(1) - 3; j++)
+                {
+                    matching = 0;
+                    empty = 0;
+                    for (int k = 0; k < 4; k++)
+                    {
+                        if (btn[i + k, j + k].BackColor == c)
+                        {
+                            matching++;
+                        }
+                        else if (btn[i + k, j + k].BackColor == Color.White)
+                        {
+                            empty++;
+                            x = i + k;
+                            y = j;
+                        }
+                    }
+
+                    if (matching == 3 && empty == 1)
+                    {
+                        //stop the computer from helping the player win
+                        //by only blocking when on the same row
+                        if ((y < 5 && btn[x, y + 1].BackColor != Color.White) || y == 5)
+                        {
+                            return x;
+                        }
+                        else
+                        {
+                            int move = r.Next(btn.GetLength(0));
+                            if (move == x)
+                            {
+                                if (x == 6)
+                                {
+                                    x = r.Next(x);
+                                }
+                                else
+                                {
+                                    x += 1;
+                                }
+                            }
+                            return x;
+                        }
+                    }
+                }
+            }
+
+            //check rising diagonals to block/win
+            for (int i = btn.GetLength(0) - 1; i > 2; i--)
+            {
+                for (int j = 0; j < btn.GetLength(1) - 3; j++)
+                {
+                    matching = 0;
+                    empty = 0;
+                    for (int k = 3; k > -1; k--)
+                    {
+                        if (btn[i - k, j + k].BackColor == c)
+                        {
+                            matching++;
+                        }
+                        else if (btn[i - k, j + k].BackColor == Color.White)
+                        {
+                            empty++;
+                            x = i - k;
+                            y = j + k;
+                        }
+                    }
+
+                    if (matching == 3 && empty == 1)
+                    {
+                        //stop the computer from helping the player win
+                        //by only blocking when on the same row
+                        if ((y < 5 && btn[x, y + 1].BackColor != Color.White) || y == 5)
+                        {
+                            return x;
+                        }
+                        else
+                        {
+                            int move = r.Next(btn.GetLength(0));
+                            if (move == x)
+                            {
+                                if (x == 6)
+                                {
+                                    x = r.Next(x);
+                                }
+                                else
+                                {
+                                    x -= 1;
+                                }
+                            }
+                            return x;
+                        }
+                    }
+                }
+            }
+
+            x = -1;
+            return x;
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
