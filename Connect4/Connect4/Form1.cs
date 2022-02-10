@@ -447,7 +447,7 @@ namespace Connect4
 
         }
 
-        public void saveScore(int moveCounter)
+        public void saveScore(int moveCounter) // function to save highscore to file
         {
             start.loadScore();
             // Check the current turn

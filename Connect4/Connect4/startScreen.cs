@@ -83,8 +83,6 @@ namespace Connect4
             pBest2Moves.Location = new Point(300, 105);//location
             pBest2Moves.Text = "P2 Best Moves: ";//inital text
             Controls.Add(pBest2Moves);//add to form
-
-            loadScore();
         }
 
         public void title_Click(object sender, EventArgs e)
@@ -106,6 +104,7 @@ namespace Connect4
 
         public void loadScore()
         {
+            // if the file doesn't exist dont show the scores yet
             if (!File.Exists(path))
             {
                 p1BestMoves.Hide();
@@ -114,10 +113,12 @@ namespace Connect4
                 return;
             }
 
+            // opens a file for reading
             string[] readScores = new string[3];
             StreamReader s = File.OpenText(path);
             string read = null;
 
+            // reads each line of the file, storing it in an array
             int i = 0;
             while ((read = s.ReadLine()) != null)
             {
@@ -126,6 +127,7 @@ namespace Connect4
             }
             s.Close();
 
+            // splits the stored lines into different columns
             string[] fileData = new string[i];
             string[,] scores = new string[3, 2];
             for (int j = 0; j < readScores.Length; j++)
@@ -138,6 +140,7 @@ namespace Connect4
                 }
             }
 
+            // assign the values from the array to the score labels
             for (int k = 0; k < scores.GetLength(0); k++)
             {
                 if (scores[k,0] == "1")
@@ -152,6 +155,7 @@ namespace Connect4
                 }
             }
 
+            //show the score table if there are values present
             if (p1BestScore == 0 && p2BestScore == 0)
             {
                 p1BestMoves.Hide();
