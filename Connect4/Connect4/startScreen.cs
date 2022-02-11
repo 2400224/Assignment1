@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Connect4
 {
@@ -34,6 +35,9 @@ namespace Connect4
         public int p1BestScore;
         public int p2BestScore;
 
+        //create button sound
+        SoundPlayer buttonSound = new SoundPlayer(Connect4.Properties.Resources.button);
+
         public startScreen()
         {
             InitializeComponent();
@@ -53,7 +57,7 @@ namespace Connect4
             start.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;//text alignment
             start.SetBounds(200, 200, 200, 70);//location and size
             start.Font = new Font("Berlin Sans FB", 10);//font
-            start.Click += new EventHandler(this.title_Click);//link to event handler
+            start.Click += new EventHandler(this.start_Click);//link to event handler
             Controls.Add(start);//add to form
 
             //add exit button to form
@@ -85,8 +89,11 @@ namespace Connect4
             Controls.Add(pBest2Moves);//add to form
         }
 
-        public void title_Click(object sender, EventArgs e)
+        public void start_Click(object sender, EventArgs e)
         {
+            //play button sound
+            buttonSound.Play();
+
             //create instance of form1
             Form1 gameScreen = new Form1();
 
@@ -98,6 +105,9 @@ namespace Connect4
         
         public void exit_Click(object sender, EventArgs e)
         {
+            //play button sound
+            buttonSound.Play();
+
             //exit the game
             Close();
         }
