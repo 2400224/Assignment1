@@ -8,11 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Connect4
 {
     public partial class Form1 : Form
     {
+        //create button sound
+        SoundPlayer buttonSound = new SoundPlayer(Connect4.Properties.Resources.button);
+        
+        //create theme sound
+        SoundPlayer theme = new SoundPlayer(Connect4.Properties.Resources.theme);
+
+        //create victory sounds
+        SoundPlayer victory = new SoundPlayer(Connect4.Properties.Resources.Victory1);
+
         //create menu object
         MenuStrip menu = new MenuStrip();
 
@@ -41,9 +51,13 @@ namespace Connect4
         //create filepath for high score table
         string path = @"score.txt";
 
+        
+
         public Form1()
         {
             InitializeComponent();
+
+            theme.Play();
 
             //configure menu options
             menu.BackColor = Color.LightGray;//color 
@@ -123,11 +137,12 @@ namespace Connect4
 
            
         }
+
         
 
         void btnEvent_Click(object sender, EventArgs e)//Event handler for  the buttons
         {
-
+            
             //get index of button clicked on - https://stackoverflow.com/questions/41285748/click-event-for-two-dimensional-button-array
             Button b = sender as Button;
             string[] index = b.Tag.ToString().Split(',');
@@ -197,17 +212,22 @@ namespace Connect4
 
         public void about_Click(object sender, System.EventArgs e)//event hander for 'about' item in the menu
         {
+            
+
             MessageBox.Show("A simple connect 4 game made in C# for the first AC22005 Assignment © 2022 - Team 12", "About", MessageBoxButtons.OK);
         }
 
         public void htp_Click(object sender, System.EventArgs e)//event hander for 'How to Play' item in the menu
         {
+            
+
             MessageBox.Show("This is a 2 Player Game where each player takes turns placing their colour on the board. The first player to get four of their colours in a row diagonally, horizontally, or vertically will win. The less moves it takes, the better!", "How to Play", MessageBoxButtons.OK);
         }
 
         public void quit_Click(object sender, System.EventArgs e)//event hander for 'quit' item in the menu
         {
-
+            //play button sound
+            buttonSound.Play();
 
             //show start screen
             start.Show();
@@ -216,6 +236,12 @@ namespace Connect4
 
         public void reset_Click(object sender, System.EventArgs e)//event handler for 'reset' item in the menu
         {
+            //play button sound
+            buttonSound.Play();
+
+            //play theme sound
+            theme.Play();
+
             //reset variables and lables
             turn = false;
             p1MoveCounter = 0;
@@ -318,6 +344,10 @@ namespace Connect4
                 {
                     if(btn[x,y].BackColor == Color.Yellow && btn[x + 1, y].BackColor == Color.Yellow && btn[x + 2, y].BackColor == Color.Yellow && btn[x + 3, y].BackColor == Color.Yellow)
                     {
+                        //stop theme and play victory sound
+                        theme.Stop();
+                        victory.Play();
+
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
                         saveScore(p1MoveCounter);
                         //show start screen
@@ -334,6 +364,10 @@ namespace Connect4
                 {
                     if (btn[x, y].BackColor == Color.Yellow && btn[x, y+1].BackColor == Color.Yellow && btn[x, y + 2].BackColor == Color.Yellow && btn[x, y + 3].BackColor == Color.Yellow)
                     {
+                        //stop theme and play victory sound
+                        theme.Stop();
+                        victory.Play();
+
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
                         saveScore(p1MoveCounter);
                         //show start screen
@@ -350,6 +384,11 @@ namespace Connect4
                 {
                     if (btn[x, y].BackColor == Color.Yellow && btn[x + 1, y + 1].BackColor == Color.Yellow && btn[x + 2, y + 2].BackColor == Color.Yellow && btn[x + 3, y + 3].BackColor == Color.Yellow)
                     {
+
+                        //stop theme and play victory sound
+                        theme.Stop();
+                        victory.Play();
+
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves! ", "Congratulations", MessageBoxButtons.OK);
                         saveScore(p1MoveCounter);
                         //show start screen
@@ -366,6 +405,11 @@ namespace Connect4
                 {
                     if (btn[x, y].BackColor == Color.Yellow && btn[x + 1, y - 1].BackColor == Color.Yellow && btn[x + 2, y - 2].BackColor == Color.Yellow && btn[x + 3, y - 3].BackColor == Color.Yellow)
                     {
+
+                        //stop theme and play victory sound
+                        theme.Stop();
+                        victory.Play();
+
                         MessageBox.Show("Player 1 Wins with " + p1MoveCounter + " moves! ", "Congratulations", MessageBoxButtons.OK);
                         saveScore(p1MoveCounter);
                         //show start screen
@@ -387,6 +431,10 @@ namespace Connect4
                 {
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y].BackColor == Color.Red && btn[x + 2, y].BackColor == Color.Red && btn[x + 3, y].BackColor == Color.Red)
                     {
+                        //stop theme and play victory sound
+                        theme.Stop();
+                        victory.Play();
+
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
                         saveScore(p2MoveCounter);
                         //show start screen
@@ -403,6 +451,10 @@ namespace Connect4
                 {
                     if (btn[x, y].BackColor == Color.Red && btn[x, y + 1].BackColor == Color.Red && btn[x, y + 2].BackColor == Color.Red && btn[x, y + 3].BackColor == Color.Red)
                     {
+                        //stop theme and play victory sound
+                        theme.Stop();
+                        victory.Play();
+
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
                         saveScore(p2MoveCounter);
                         //show start screen
@@ -419,6 +471,10 @@ namespace Connect4
                 {
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y + 1].BackColor == Color.Red && btn[x + 2, y + 2].BackColor == Color.Red && btn[x + 3, y + 3].BackColor == Color.Red)
                     {
+                        //stop theme and play victory sound
+                        theme.Stop();
+                        victory.Play();
+
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
                         saveScore(p2MoveCounter);
                         //show start screen
@@ -435,6 +491,10 @@ namespace Connect4
                 {
                     if (btn[x, y].BackColor == Color.Red && btn[x + 1, y - 1].BackColor == Color.Red && btn[x + 2, y - 2].BackColor == Color.Red && btn[x + 3, y - 3].BackColor == Color.Red)
                     {
+                        //stop theme and play victory sound
+                        theme.Stop();
+                        victory.Play();
+
                         MessageBox.Show("Player 2 Wins with " + p2MoveCounter + " moves!", "Congratulations", MessageBoxButtons.OK);
                         saveScore(p2MoveCounter);
                         //show start screen

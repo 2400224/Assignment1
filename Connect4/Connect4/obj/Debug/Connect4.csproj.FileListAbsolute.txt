@@ -1,7 +1,6 @@
 C:\Users\mcduf\Documents\GitHub\Connect4\Connect4\Connect4\bin\Debug\Connect4.exe.config
 C:\Users\mcduf\Documents\GitHub\Connect4\Connect4\Connect4\bin\Debug\Connect4.exe
 C:\Users\mcduf\Documents\GitHub\Connect4\Connect4\Connect4\bin\Debug\Connect4.pdb
-C:\Users\mcduf\Documents\GitHub\Connect4\Connect4\Connect4\obj\Debug\Connect4.csproj.AssemblyReference.cache
 C:\Users\mcduf\Documents\GitHub\Connect4\Connect4\Connect4\obj\Debug\Connect4.Form1.resources
 C:\Users\mcduf\Documents\GitHub\Connect4\Connect4\Connect4\obj\Debug\Connect4.Properties.Resources.resources
 C:\Users\mcduf\Documents\GitHub\Connect4\Connect4\Connect4\obj\Debug\Connect4.csproj.GenerateResource.cache
@@ -20,3 +19,4 @@ C:\Users\hands\Documents\01-Dev\02-Uni\02\AC22005\knots-crosses\Connect4\Connect
 C:\Users\hands\Documents\01-Dev\02-Uni\02\AC22005\knots-crosses\Connect4\Connect4\obj\Debug\Connect4.csproj.CoreCompileInputs.cache
 C:\Users\hands\Documents\01-Dev\02-Uni\02\AC22005\knots-crosses\Connect4\Connect4\obj\Debug\Connect4.exe
 C:\Users\hands\Documents\01-Dev\02-Uni\02\AC22005\knots-crosses\Connect4\Connect4\obj\Debug\Connect4.pdb
+C:\Users\mcduf\Documents\GitHub\Connect4\Connect4\Connect4\obj\Debug\Connect4.csprojAssemblyReference.cache
